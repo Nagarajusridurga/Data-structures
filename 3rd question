@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
+// Function to create a new node
+struct ListNode* createNode(int val) {
+    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    newNode->val = val;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to count the number of nodes in the linked list
+int countNodes(struct ListNode* head) {
+    int count = 0;
+    struct ListNode* current = head;
+    while (current != NULL) {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
+
+int main() {
+    // Create the linked list: 1->2->3->5->8
+    struct ListNode* head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(5);
+    head->next->next->next->next = createNode(8);
+    
+    // Count the number of nodes
+    int numNodes = countNodes(head);
+    printf("Number of nodes in the linked list: %d\n", numNodes);
+    
+    // Free the memory allocated for the linked list nodes
+    struct ListNode* current = head;
+    while (current != NULL) {
+        struct ListNode* temp = current;
+        current = current->next;
+        free(temp);
+    }
+    
+    return 0;
+}
